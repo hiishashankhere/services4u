@@ -60,7 +60,12 @@ const serviceSchema = new mongoose.Schema({
                 //required:true
             }
         }
-    ]
+    ],
+    paymentinfo:{
+        type:mongoose.Schema.ObjectId,
+        ref:"Payment"
+    },
+    paidat:Date
 },{timestamps:true})
 
 export const Service = mongoose.model("Service",serviceSchema)
