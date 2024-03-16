@@ -1,26 +1,33 @@
-import express from 'express'
-import {connect} from './config/database.js'
-import dotenv from 'dotenv'
-import userRouter from './routes/user.js'
-import serviceRouter from './routes/service.js'
-import cookieParser from 'cookie-parser'
+import "express-async-errors";
+import dotenv from "dotenv";
+dotenv.config();
+import cors from "cors";
+import express from "express";
+import { startServer } from "./config/database.js";
+import userRouter from "./routes/user.js";
+import serviceRouter from "./routes/service.js";
+import cookieParser from "cookie-parser";
+import { errorHandler } from "./middlewares/error.js";
 
-const app = express()
+const PORT = process.env.PORT;
 
-//database coonection
-connect()
+const app = express();
 
-//env variables
-dotenv.config({
-    path:'config/config.env'
-})
 //middlewares
-app.use(express.json())
-app.use(cookieParser())
-app.use("/api/v1",userRouter)
-app.use("/api/v1",serviceRouter)
+app.use(cookieParser());
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
-const PORT=process.env.PORT
-app.listen(PORT,()=>{
-    console.log(`server started running on:${PORT}`);
-})
+app.get("/", (_, res) => res.json({ success: true, route: "/" }));
+
+app.use("/api/v1", userRouter);
+app.use("/api/v1", serviceRouter);
+
+app.use(errorHandler);
+
+startServer(app, PORT);
