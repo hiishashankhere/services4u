@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import userRouter from './routes/user.js'
 import serviceRouter from './routes/service.js'
 import cookieParser from 'cookie-parser'
+import Razorpay from 'razorpay'
 
 const app = express()
 
@@ -14,6 +15,13 @@ connect()
 dotenv.config({
     path:'config/config.env'
 })
+//razorpay instance
+export const instance = new Razorpay({
+    key_id:process.env.RAZORPAY_API_KEY,
+    key_secret:process.env.RAZORPAY_SECRET_KEY
+})
+
+
 //middlewares
 app.use(express.json())
 app.use(cookieParser())
