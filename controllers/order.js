@@ -38,3 +38,21 @@ export const createOrder = async (req, res) => {
     });
   }
 };
+
+export const getOrders = async (req, res) => {
+  try {
+    // Populate all fields of the order including referenced fields
+    const orders = await Order.find().populate("services").populate("user"); // Populate user field, exclude password and email
+
+    res.status(200).json({
+      success: true,
+      message: "success",
+      orders,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

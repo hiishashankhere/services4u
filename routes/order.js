@@ -1,9 +1,10 @@
 import express from "express";
-import { createOrder } from "../controllers/order.js";
+import { createOrder, getOrders } from "../controllers/order.js";
 import { adminSide, isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
 router.post("/create/order", isAuthenticated, adminSide, createOrder);
+router.get("/orders", isAuthenticated, adminSide, getOrders);
 
 export default router;
