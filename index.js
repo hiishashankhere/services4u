@@ -1,11 +1,13 @@
 import "express-async-errors";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "config/config.env" });
 import cors from "cors";
 import express from "express";
 import { startServer } from "./config/database.js";
 import userRouter from "./routes/user.js";
 import serviceRouter from "./routes/service.js";
+import orderRouter from "./routes/order.js";
+import paymentRouter from "./routes/payment.js";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/error.js";
 
@@ -27,6 +29,8 @@ app.get("/", (_, res) => res.json({ success: true, route: "/" }));
 
 app.use("/api/v1", userRouter);
 app.use("/api/v1", serviceRouter);
+app.use("/api/v1", orderRouter);
+app.use("/api/v1", paymentRouter);
 
 app.use(errorHandler);
 
