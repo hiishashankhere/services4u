@@ -39,7 +39,7 @@ router.get("/admin/user/:id", isAuthenticated, adminSide, getSingleUser);
 router.put("/admin/user/:id", isAuthenticated, adminSide, updateRole);
 router.delete("/admin/user/:id", isAuthenticated, adminSide, deleteUser);
 router.post("/admin/add-service", isAuthenticated, adminSide, addService);
-router.get("/admin/all-category", isAuthenticated, adminSide, allCategory);
-router.get("/admin/service", isAuthenticated, adminSide, getService);
+router.get("/admin/all-category", isAuthenticated, allCategory);
+router.get("/admin/service", isAuthenticated, getService);
 
 export default router;
