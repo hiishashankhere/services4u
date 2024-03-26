@@ -6,7 +6,7 @@ import { Service } from "../models/service.js";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, address } = req.body;
+    const { name, email, password, address, mobile } = req.body;
     let user = await User.findOne({ email });
     if (user)
       return res.status(404).json({
@@ -19,6 +19,7 @@ export const register = async (req, res) => {
       email,
       password,
       address,
+      mobile
     });
     res.status(201).json({
       success: true,
@@ -403,3 +404,6 @@ export const getService = async (req, res) => {
     });
   }
 };
+
+
+

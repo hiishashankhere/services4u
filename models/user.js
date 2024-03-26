@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Please enter the address"],
       trim: true,
     },
-    movile: {
+    mobile: {
       type: String,
       minLength: 10,
     },
@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "please enter the password"],
       minLength: 4,
+    },
+    message:{
+      type:String,
+      minLength:15,
+    },
+    isPremium:{             //for the user who want to seek job
+      type:Boolean,
+      default:false
     },
     role: {
       type: String,
