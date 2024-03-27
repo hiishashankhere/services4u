@@ -30,3 +30,13 @@ export const adminSide = async (req, res, next) => {
   }
   next();
 };
+
+//only premium user
+export const ispremium = async(req,res)=>{
+  if(req.user.isPremium !== true){
+    return res.status(404).json({
+      success:false,
+      message:"only premium members are allowed"
+    })
+  }
+}
