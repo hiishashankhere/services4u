@@ -32,18 +32,24 @@ const userSchema = new mongoose.Schema(
       required: [true, "please enter the password"],
       minLength: 4,
     },
-    message:{
-      type:String,
-      minLength:15,
+    message: {
+      type: String,
+      minLength: 15,
     },
-    isPremium:{             //for the user who want to seek job
-      type:Boolean,
-      default:false
+    isPremium: {
+      //for the user who want to seek job
+      type: Boolean,
+      default: false,
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "employee"],
       default: "user",
+    },
+    service: {
+      // if user is an employee which services he can provide or he trained in to  get the job done
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Service",
     },
     image: {
       public_id: String,

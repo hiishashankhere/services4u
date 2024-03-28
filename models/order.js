@@ -6,6 +6,10 @@ const orderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    assigned: {
+      type: Boolean,
+      default: false,
+    },
     services: [
       {
         type: mongoose.Schema.Types.ObjectId,

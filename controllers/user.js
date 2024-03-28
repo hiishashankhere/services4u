@@ -6,7 +6,7 @@ import { Service } from "../models/service.js";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, address, mobile } = req.body;
+    const { email } = req.body;
     let user = await User.findOne({ email });
     if (user)
       return res.status(404).json({
@@ -15,15 +15,12 @@ export const register = async (req, res) => {
       });
 
     user = await User.create({
-      name,
-      email,
-      password,
-      address,
-      mobile
+      ...req.body,
     });
     res.status(201).json({
       success: true,
       message: "user registered successfully",
+      user,
     });
   } catch (error) {
     res.status(500).json({
@@ -223,6 +220,24 @@ export const updatePassword = async (req, res) => {
   }
 };
 
+export const updateIsPremium = async (req, res) => {
+  const user = req.user;
+  try {
+    if (user.role !== "employee") throw Error("You are not an employee");
+
+    await User.findByIdAndUpdate(user._id, { isPremium: true });
+    res.status(200).json({
+      success: true,
+      message: "You are added as an employee to the company",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 //updating user profiles
 
 export const updateProfile = async (req, res) => {
@@ -260,6 +275,22 @@ export const updateProfile = async (req, res) => {
 export const getAllUser = async (req, res) => {
   try {
     const users = await User.find({ role: "user" });
+
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getAllEmployees = async (req, res) => {
+  try {
+    const users = await User.find({ role: "employee" });
 
     res.status(200).json({
       success: true,
@@ -404,6 +435,3 @@ export const getService = async (req, res) => {
     });
   }
 };
-
-
-
